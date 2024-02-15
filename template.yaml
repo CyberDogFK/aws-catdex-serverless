@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  catdex-serverless
+  Sample SAM Template for catdex-serverless
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  CatTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: cat
+        Type: String
+
+  PostCatFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: target/lambda/catdex-serverless/
+      Handler: bootstrap
+      Runtime: provided.al2
+      Architectures: ["arm64"]
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /cat
+            Method: post
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref CatTable
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref CatTable
+
+Outputs:
+  PostApi:
+    Description: "API Gateway endpoint URL for Pord stage for Post function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/"
+  PostCatFunction:
+      Description: "Post Lambda Function ARN"
+      Value: !GetAtt PostCatFunction.Arn
+  CatTable:
+      Description: "DynamoDB table name"
+      Value: !GetAtt CatTable.Arn

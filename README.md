@@ -1,6 +1,11 @@
 # aws-catdex-serverless
 
+if we build with
+cargo lambda build --release --arm64. Without archiving to zip
+we still can deploy it, and template.yaml will look as ususal
+
 sam deploy (for the first time with --staged, almost everywhere don't choolse anyhing, for default option)
+
 
 It will be shown in aws console of the region where it is created
 

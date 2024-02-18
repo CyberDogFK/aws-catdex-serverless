@@ -17,6 +17,26 @@ Resources:
         Name: cat
         Type: String
 
+  GetCatsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: target/lambda/get-cats/
+      Handler: bootstrap
+      Runtime: provided.al2
+      Architectures: [ "arm64" ]
+      Events:
+        GetCats:
+          Type: Api
+          Properties:
+            Path: /cats
+            Method: get
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref CatTable
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref CatTable
+
   PostCatFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -24,7 +44,7 @@ Resources:
         catdex-hello-world-api
         
         Sample template, just to test is it working
-      CodeUri: target/lambda/post-cat/bootstrap.zip
+      CodeUri: target/lambda/post-cat/
       Handler: bootstrap
       Runtime: provided.al2
       Architectures: ["arm64"]
@@ -45,9 +65,12 @@ Outputs:
   PostApi:
     Description: "API Gateway endpoint URL for Pord stage for Post function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/"
+  GetCatsFunction:
+    Description: "Get Cats Lambda Function ARN"
+    Value: !GetAtt GetCatsFunction.Arn
   PostCatFunction:
-      Description: "Post Lambda Function ARN"
-      Value: !GetAtt PostCatFunction.Arn
+    Description: "Post Lambda Function ARN"
+    Value: !GetAtt PostCatFunction.Arn
   CatTable:
-      Description: "DynamoDB table name"
-      Value: !GetAtt CatTable.Arn
+    Description: "DynamoDB table name"
+    Value: !GetAtt CatTable.Arn

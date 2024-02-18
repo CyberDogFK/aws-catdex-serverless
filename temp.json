@@ -1,0 +1,12 @@
+{
+  "headers": {
+    "content-type": "application/json"
+  },
+  "requestContext": {
+    "http": {
+      "method": "POST",
+      "protocol": "HTTP/1.1"
+    }
+  },
+  "body": "{\"name\":\"catsay\"}"
+}

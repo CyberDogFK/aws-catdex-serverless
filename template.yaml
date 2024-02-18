@@ -24,7 +24,7 @@ Resources:
         catdex-hello-world-api
         
         Sample template, just to test is it working
-      CodeUri: target/lambda/catdex-serverless/bootstrap.zip
+      CodeUri: target/lambda/post-cat/bootstrap.zip
       Handler: bootstrap
       Runtime: provided.al2
       Architectures: ["arm64"]

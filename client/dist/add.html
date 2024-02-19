@@ -12,7 +12,7 @@
 
         const cat_name = document.getElementById('name').value
 
-        const cat_post_response = await fetch('<INSERT URL>', {
+        const cat_post_response = await fetch('https://rsmjgijmue.execute-api.us-east-1.amazonaws.com/Prod/cat', {
             method: 'POST',
             mode: 'cors',
             headers: {

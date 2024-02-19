@@ -16,7 +16,7 @@
 </section>
 <script charset="UTF-8">
     document.addEventListener("DOMContentLoaded", () => {
-        fetch('<INSERT URL>')
+        fetch('https://rsmjgijmue.execute-api.us-east-1.amazonaws.com/Prod>/cats')
             .then((response) => response.json())
             .then((cats) => {
                 document.getElementById("cats").innerText = ""

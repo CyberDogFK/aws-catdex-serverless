@@ -11,6 +11,14 @@ path = "src/bin/lambda/post-cat.rs"
 name = "get-cats"
 path = "src/bin/lambda/get-cats.rs"
 
+[[bin]]
+name = "create-bucket"
+path = "src/bin/create-bucket.rs"
+
+[[bin]]
+name = "put-website"
+path = "src/bin/put-website.rs"
+
 [dependencies]
 aws-config = "0.54.1"
 aws-sdk-dynamodb = "0.24.0"

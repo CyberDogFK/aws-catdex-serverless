@@ -27,6 +27,9 @@ async fn function_handler(
     let resp = Response::builder()
         .status(StatusCode::OK)
         .header("content-type", "text/html")
+        .header("Access-Control-Allow-Origin", "*")
+        .header("Access-Control-Allow-Headers", "Content-Type")
+        .header("Access-Control-Allow-Methods", "GET")
         .body(serde_json::to_string(&response_body).unwrap().into())
         .map_err(Box::new)?;
     Ok(resp)

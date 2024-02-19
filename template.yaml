@@ -17,6 +17,11 @@ Resources:
         Name: cat
         Type: String
 
+  ImageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+
   GetCatsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -57,9 +62,12 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref CatTable
+          BUCKET_NAME: !Ref ImageBucket
       Policies:
         - DynamoDBWritePolicy:
             TableName: !Ref CatTable
+        - S3WritePolicy:
+            BucketName: !Ref ImageBucket
 
 Outputs:
   PostApi:

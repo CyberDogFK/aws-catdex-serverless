@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Catdex</title>
+    <link rel="stylesheet" href="css/index.css" type="text/css"/>
+</head>
+<body>
+<h1>Catdex</h1>
+<p>
+    <a href="/add.html">Add a new cat</a>
+</p>
+
+<section class="cats" id="cats">
+    <p>No cats yet</p>
+</section>
+<script charset="UTF-8">
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('<INSERT URL>')
+            .then((response) => response.json())
+            .then((cats) => {
+                document.getElementById("cats").innerText = ""
+                for (cat of cats.cats) {
+                    const catElement = document.createElement("article")
+                    catElement.classList.add("cat")
+                    const catTitle = document.createElement("h3")
+                    const catLink = document.createElement("a")
+                    catLink.innerText = cat
+                    const catImage = document.createElement("img")
+                    catImage.src = `images/${cat}`
+
+                    catTitle.appendChild(catlink)
+                    catElement.appendChild(catTitle)
+                    catelement.appendChild(catImage)
+
+                    document.getElementById("cats").appendChild(catElement)
+                }
+            })
+    })
+</script>
+</body>
+</html>

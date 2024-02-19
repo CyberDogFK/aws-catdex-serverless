@@ -12,11 +12,7 @@ async fn function_handler(
     client: &dynamodb::Client,
     table_name: &str,
 ) -> Result<Response<Body>, Error> {
-    let scan_output = client
-        .scan()
-        .table_name(table_name)
-        .send()
-        .await;
+    let scan_output = client.scan().table_name(table_name).send().await;
 
     let scan_output = scan_output?;
     let response_body = ResponseBody {
@@ -24,23 +20,17 @@ async fn function_handler(
             .items()
             .unwrap_or_default()
             .into_iter()
-            .map(|val| val.get("cat")
-                .unwrap()
-                .as_s()
-                .unwrap())
+            .map(|val| val.get("cat").unwrap().as_s().unwrap())
             .collect(),
     };
 
     let resp = Response::builder()
         .status(StatusCode::OK)
         .header("content-type", "text/html")
-        .body(serde_json::to_string(&response_body)
-        .unwrap()
-        .into())
+        .body(serde_json::to_string(&response_body).unwrap().into())
         .map_err(Box::new)?;
     Ok(resp)
 }
-
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
@@ -57,5 +47,5 @@ async fn main() -> Result<(), Error> {
     run(service_fn(|request| {
         function_handler(request, &client, &table_name)
     }))
-        .await
+    .await
 }
